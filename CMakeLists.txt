@@ -1,0 +1,12 @@
+cmake_minimum_required (VERSION 2.8.11)
+project (kaf)
+include_directories(inc)
+add_definitions(-std=c++11 -Wall -Werror -fno-exceptions)
+add_library(logger src/logger.cpp src/common.cpp src/netw_replicator.cpp)
+add_library(netw src/netw.cpp src/buffer.cpp src/common.cpp)
+target_link_libraries(netw rt pthread)
+
+add_executable(demo test/logger_main.cpp)
+add_executable(server test/server_main.cpp)
+target_link_libraries(server logger netw)
+target_link_libraries (demo logger)
